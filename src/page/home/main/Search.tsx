@@ -6,7 +6,7 @@ import MagnifyIcon from "mdi-material-ui/Magnify";
 import React, { FC } from "react";
 
 const useStyles = makeStyles((theme) => ({
-  root: { textAlign: "center" },
+  root: { textAlign: "center", margin: "5px 0" },
   search: {
     width: "90%",
     height: "45px",
