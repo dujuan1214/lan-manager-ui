@@ -9,6 +9,7 @@
     "clean": "rimraf dist",
     "clean:cache": "rimraf dist .cache",
     "tslint": "tslint -p .",
+    "tslint:fix": "tslint --fix src/**/*.tsx",
     "format": "pretty-quick",
     "compile": "tsc",
     "compile:watch": "tsc -w"
