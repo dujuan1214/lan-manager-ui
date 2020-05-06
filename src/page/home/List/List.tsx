@@ -1,12 +1,13 @@
+import MyList from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import React, { FC } from "react";
-import { Device } from '../../../test/devices';
+import LaptopIcon from "mdi-material-ui/Laptop";
+import React, { FC, useEffect, useState } from "react";
+import { Device } from "../../../test/devices";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,27 +22,35 @@ function createData(name, status, open) {
 const rows = [createData("设备1", "开", "开"), createData("设备2", "开", "开")];
 const List: FC<{ devices: Device[] }> = function (props) {
   const classes = useStyles();
+  const [list, setList] = useState<Device[]>([]);
+  useEffect(() => {
+    setList(props.devices);
+  }, [props.devices]);
+  const listChange = (e, index) => {
+    const cope = [...props.devices];
+    cope[index].open = e.target.checked;
+    setList(cope);
+  };
   return (
-    <Table className={classes.root}>
-      <TableHead>
-        <TableRow>
-          <TableCell align="right">设备</TableCell>
-          <TableCell align="right">状态</TableCell>
-          <TableCell align="right">开关</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow key={row.name}>
-            <TableCell align="right">{row.name}</TableCell>
-            <TableCell align="right">{row.status}</TableCell>
-            <TableCell align="right">
-              <Switch />
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <MyList>
+      {list.map((row, index) => (
+        <ListItem key={row.id}>
+          <ListItemIcon>
+            <LaptopIcon />
+          </ListItemIcon>
+          <ListItemText id="switch-list-label-wifi" primary={row.name} />
+          <ListItemSecondaryAction>
+            <Switch
+              edge="end"
+              checked={row.open}
+              onChange={(e) => {
+                listChange(e, index);
+              }}
+            />
+          </ListItemSecondaryAction>
+        </ListItem>
+      ))}
+    </MyList>
   );
 };
 export default List;
