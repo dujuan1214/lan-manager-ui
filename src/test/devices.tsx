@@ -4,6 +4,7 @@ export interface Device {
   id: string;
   name: string;
   open: boolean;
+  ip: string;
 }
 
 export async function fetchDevices(): Promise<Device[]> {
@@ -11,6 +12,7 @@ export async function fetchDevices(): Promise<Device[]> {
   // const json = await resp.json();
   // return json as Device[];
   const res = await useMockList(1);
+  console.log(res)
 
   return res.array as Device[];
 }

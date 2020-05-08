@@ -6,6 +6,7 @@ interface Data {
   start: boolean;
   open: boolean;
   name: string;
+  ip: string;
 }
 
 interface Device {
@@ -34,6 +35,7 @@ const getData: (page: number) => Device = (page) => {
         name: () => Random.cname(),
         "start|1-2": true,
         "test|1-2": true,
+        ip: () => Random.ip(),
         open() {
           return this.start && this.test;
         },

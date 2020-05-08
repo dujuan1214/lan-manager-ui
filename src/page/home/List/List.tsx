@@ -8,14 +8,18 @@ import Switch from "@material-ui/core/Switch";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import { Device } from "../../../test/devices";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.common.white,
-    overflow: "hidden"
-  },
+  root: {},
+  box: {
+    width: '200px',
+    height: '50px',
+    lineHeight: '50px',
+  }
 }));
 function createData(name, status, open) {
   return { name, status, open };
@@ -23,6 +27,7 @@ function createData(name, status, open) {
 
 const List: FC<{ devices: Device[] }> = function (props) {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const [list, setList] = useState<Device[]>([]);
   useEffect(() => {
     setList(props.devices);
@@ -32,25 +37,45 @@ const List: FC<{ devices: Device[] }> = function (props) {
     cope[index].open = e.target.checked;
     setList(cope);
   };
+  const [obg, setObg] = useState<any>({});
   return (
     <MyList>
       {list.map((row, index) => (
-        <ListItem key={row.id}>
+        <ListItem key={row.id} onClick={() => {
+          setOpen(true)
+          setObg(row)
+        }} >
           <ListItemIcon>
             <LaptopIcon />
           </ListItemIcon>
-          <ListItemText id="switch-list-label-wifi" primary={row.name} />
+          <ListItemText primary={row.name} />
           <ListItemSecondaryAction>
             <Switch
               edge="end"
               checked={row.open}
               onChange={(e) => {
                 listChange(e, index);
+
               }}
             />
           </ListItemSecondaryAction>
         </ListItem>
       ))}
+      <Dialog maxWidth='xl' open={open} onClose={() => setOpen(false)}>
+        <DialogTitle style={{ textAlign: 'center' }}>属性</DialogTitle>
+        <MyList style={{ minWidth: '260px' }}>
+          <ListItem>
+            <ListItemText primary='id:' />
+            <ListItemSecondaryAction>{obg.id}</ListItemSecondaryAction>
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemText primary='ip地址:' />
+            <ListItemSecondaryAction>{obg.ip}</ListItemSecondaryAction>
+          </ListItem>
+
+        </MyList>
+      </Dialog>
     </MyList>
   );
 };
