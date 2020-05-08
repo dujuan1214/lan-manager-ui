@@ -7,9 +7,6 @@ export interface Device {
 }
 
 export async function fetchDevices(): Promise<Device[]> {
-  // return fetch("/devices").then(res => res.json())
-  // const data = await fetch("/devices")
-
   // const resp = await fetch("/devices");
   // const json = await resp.json();
   // return json as Device[];

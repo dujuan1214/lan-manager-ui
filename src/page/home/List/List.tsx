@@ -14,12 +14,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.common.white,
+    overflow: "hidden"
   },
 }));
 function createData(name, status, open) {
   return { name, status, open };
 }
-const rows = [createData("设备1", "开", "开"), createData("设备2", "开", "开")];
+
 const List: FC<{ devices: Device[] }> = function (props) {
   const classes = useStyles();
   const [list, setList] = useState<Device[]>([]);

@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import delay from "delay";
+import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
 import { Device, fetchDevices } from "../../test/devices";
 import List from "./List/List";
@@ -14,8 +15,6 @@ const Index: FC = () => {
     setLoading(true);
     await delay(1000);
     const devices = await fetchDevices();
-    console.log("devices", devices);
-
     setLoading(false);
     setDevices(devices);
   }
@@ -25,10 +24,10 @@ const Index: FC = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <Search />
+      <Button color="primary" size="small" onClick={() => load()}><RefreshIcon /></Button>
       <List devices={devices} />
-      <Button onClick={() => load()}>Refresh</Button>
       {loading && (
         <span>
           <CircularProgress />

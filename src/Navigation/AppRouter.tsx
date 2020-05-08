@@ -8,12 +8,15 @@ import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import Home from "../page/home";
 import Ip from "../page/ip";
 import Mac from "../page/mac";
+import ButtonNav from '../components/ButtonNav';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  contexts: {
-    height: "3em",
-    textAlign: "center",
+  root: {
+  },
+  btn: {
+    height: '50px',
+
+
   },
 }));
 
@@ -21,24 +24,16 @@ const AppRouter: FC = () => {
   const classes = useStyles();
   return (
     <HashRouter className={classes.root}>
-      <Box height="100%">
-        <Box p={1}>
+      <Box>
+        <Box style={{ height: 'calc(100vh - 50px)', overflow: "auto", }}>
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/ip" element={<Ip />}></Route>
             <Route path="/mac" element={<Mac />}></Route>
           </Routes>
         </Box>
-        <nav className={classes.contexts}>
-          <NavLink to="/">
-            <CastIcon />
-          </NavLink>
-          <NavLink to="/ip">
-            <IpIcon />
-          </NavLink>
-          <NavLink to="/mac">
-            <RemoteDesktopIcon />
-          </NavLink>
+        <nav className={classes.btn} >
+          <ButtonNav />
         </nav>
       </Box>
     </HashRouter>
