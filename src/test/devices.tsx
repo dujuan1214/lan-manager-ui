@@ -12,7 +12,7 @@ export async function fetchDevices(): Promise<Device[]> {
   // const json = await resp.json();
   // return json as Device[];
   const res = await useMockList(1);
-  console.log(res)
+  console.log(res);
 
   return res.array as Device[];
 }

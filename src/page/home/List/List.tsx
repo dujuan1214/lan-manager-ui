@@ -1,3 +1,6 @@
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 import MyList from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -8,9 +11,6 @@ import Switch from "@material-ui/core/Switch";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import { Device } from "../../../test/devices";
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,8 +42,8 @@ const List: FC<{ devices: Device[] }> = function (props) {
     <MyList>
       {list.map((row, index) => (
         <ListItem key={row.id} onClick={() => {
-          setOpen(true)
-          setObg(row)
+          setOpen(true);
+          setObg(row);
         }} >
           <ListItemIcon>
             <LaptopIcon />
