@@ -8,11 +8,22 @@ export interface Device {
 }
 
 export async function fetchDevices(): Promise<Device[]> {
-  // const resp = await fetch("/devices");
-  // const json = await resp.json();
+  const resp = await fetch("/api/host");
+  const json = await resp.json();
   // return json as Device[];
-  const res = await useMockList(1);
-  console.log(res);
+  // const res = await useMockList(1);
+  // console.log(Window.sessionStorage);
 
-  return res.array as Device[];
+  const obj = {};
+  await fetch("/api/host", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(obj)
+  })
+  
+  console.log(json);
+
+  return json.array as Device[];
 }
