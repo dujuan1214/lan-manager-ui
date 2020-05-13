@@ -1,11 +1,11 @@
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+
 import { makeStyles } from "@material-ui/core/styles";
 import CastIcon from "mdi-material-ui/Cast";
 import IpIcon from "mdi-material-ui/Ip";
 import RemoteDesktopIcon from "mdi-material-ui/RemoteDesktop";
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
   root: {
@@ -21,13 +21,19 @@ const ButtonNav: FC = (props) => {
   return (
     <div className={classes.root}>
       <NavLink to="/">
-        <BottomNavigationAction label="Home" icon={<CastIcon />} />
+        <IconButton>
+          <CastIcon />
+        </IconButton>
       </NavLink>
       <NavLink to="/ip">
-        <BottomNavigationAction label="Nearby" icon={<IpIcon />} />
+        <IconButton>
+          <IpIcon />
+        </IconButton>
       </NavLink>
       <NavLink to="/mac">
-        <BottomNavigationAction label="User" icon={<RemoteDesktopIcon />} />
+        <IconButton>
+          <RemoteDesktopIcon />
+        </IconButton>
       </NavLink>
     </div>
   );
