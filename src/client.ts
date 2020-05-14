@@ -14,8 +14,12 @@ class Client {
         return pro
     }
 
-    async macAddr(macAddr): Promise<Host[]> {
-        const resp = await fetch(this.baseUrl + `host/${macAddr}/wake`);
+    async getDevice(macAddr): Promise<Host[]> {
+        const resp = await fetch(this.baseUrl + `host/${macAddr}/wake`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
         const json = await resp.json();
         return json as Host[];
     }

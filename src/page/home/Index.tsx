@@ -4,7 +4,7 @@ import delay from "delay";
 import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
 //import { Device, fetchDevices } from "../../test/devices";
-import client from '../../client'
+import client, { Host } from '../../client'
 import List from "./List/List";
 import Search from "./main/Search";
 import { makeStyles } from '@material-ui/core';
@@ -31,14 +31,15 @@ const Index: FC = () => {
   // const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
+  const [data, setData] = useState<Host[]>([]);
 
   async function load() {
     setLoading(true);
     await delay(1000);
-    const list = await client.fetchHosts();
-    console.log(list)
+    let data = await client.fetchHosts();
+    console.log(data)
     setLoading(false);
-    // setDevices(devices);
+    setData(data);
   }
 
   const test = () => {
@@ -57,7 +58,7 @@ const Index: FC = () => {
           <RefreshIcon />
         </Button>
       </div>
-      <List devices={[]} />
+      <List data={data} />
       {loading && (
         <span>
           <CircularProgress />
