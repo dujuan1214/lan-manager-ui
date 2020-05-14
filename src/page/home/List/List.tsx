@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "50px",
   },
 }));
-function createData(name, status, open) {
-  return { name, status, open };
-}
+// function createData(name, status, open) {
+//   return { name, status, open };
+// }
 
 const List: FC<{ devices: Device[] }> = function (props) {
   const classes = useStyles();

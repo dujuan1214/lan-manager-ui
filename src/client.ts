@@ -4,13 +4,14 @@ export interface Host {
     macAddr: string;
     up: boolean;
 }
-export class Client {
+class Client {
     readonly baseUrl = "/api/";
 
-    async fetchHosts(): Promise<Host[]> {
-        const resp = await fetch(this.baseUrl + "host");
-        const json = await resp.json();
-        return json as Host[];
+     fetchHosts(): Promise<Host[]> {
+         const pro = fetch(this.baseUrl + "host").then(res => {
+            return res.json()
+        });
+        return pro
     }
 
     async macAddr(macAddr): Promise<Host[]> {
