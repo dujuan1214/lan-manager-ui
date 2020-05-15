@@ -9,7 +9,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
-// import { Device } from "../../../test/data";
 import client, { Host } from '../../../client';
 import Button from '@material-ui/core/Button';
 
@@ -47,26 +46,21 @@ const List: FC<{ data: Host[] }> = function (props) {
    * 唤醒
    */
   const huanxing = () => {
-     setOpen(false)
-     
-     let time = setInterval(async() => {
-       // data = {
-      //   "ipAddr": "string",
-      //   "macAddr": "string",
-      //   "name": "string",
-      //   "up": true // 是否唤醒
-      // }
-    //   try{
-    //     let data = await client.getDevice(obg.macAddr)
-    //     if(data.up){
-    //       clearInterval(time)
-    //     }
-    //   }catch(err){
-    //     console.log(err);
-        
-    //   }
-    // }, 5000)
-    
+    setOpen(false)
+
+    let time = setTimeout(async () => {
+      try {
+        let data = await client.getDevice(obg.macAddr)
+
+        if (data.up) {
+          clearTimeout(time);
+        }
+      } catch (err) {
+        console.log(err);
+
+      }
+    }, 5000)
+
   }
 
   return (
@@ -83,7 +77,7 @@ const List: FC<{ data: Host[] }> = function (props) {
             <LaptopIcon />
           </ListItemIcon>
           <ListItemText primary={row.name} />
-          <ListItemText primary='1.唤醒时。。。' />
+          <ListItemText primary={row.up} />
         </ListItem>
       ))}
       <Dialog maxWidth="xl" open={open} onClose={() => setOpen(false)}>
