@@ -7,8 +7,8 @@ export interface Host {
 class Client {
     readonly baseUrl = "/api/";
 
-     fetchHosts(): Promise<Host[]> {
-         const pro = fetch(this.baseUrl + "host").then(res => {
+    async fetchHosts(): Promise<Host[]> {
+        const pro = await fetch(this.baseUrl + "host").then(res => {
             return res.json()
         });
         return pro
