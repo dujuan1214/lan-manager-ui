@@ -1,9 +1,8 @@
 export interface Host {
-  id: number;
+  ipAddr: string;
+  macAddr: string;
   name: string;
-  ip: string;
-  state: boolean;
-  mac: string;
+  up: boolean;
 }
 
 export interface Page {
@@ -20,7 +19,7 @@ class Client {
    * 请求列表
    */
   async list(): Promise<Page> {
-    const resp = await fetch(this.baseUrl + "/global/device");
+    const resp = await fetch(this.baseUrl + "/host");
     const json = await resp.json();
     return json as Page;
   }
@@ -45,6 +44,18 @@ class Client {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ state: true }),
+    });
+    const json = await res.json();
+    return json as boolean;
+  }
+
+  async scan(host: Host) {
+    const res = await fetch(this.baseUrl + "/host", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(host),
     });
     const json = await res.json();
     return json as boolean;
