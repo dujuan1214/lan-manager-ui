@@ -16,11 +16,14 @@ if (process.env.SERVER_URL) {
     "/api",
     createProxyMiddleware(["**", "!/*.*", "!/"], {
       target: process.env.SERVER_URL,
-      pathRewrite: { "^/api": "" },
+      // pathRewrite: { "^/api": "" },
       ws: true,
     }),
   );
 }
+
+// http://localhost:1234/api/host // 浏览器
+// http://office.restar.tech:3000/host
 
 const entries = path.join(__dirname, "src/index.html");
 
