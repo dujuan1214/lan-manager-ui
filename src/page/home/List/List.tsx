@@ -29,34 +29,20 @@ const useStyles = makeStyles((theme) => ({
 const List: FC<{ data: Host[] }> = function (props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [list, setList] = useState<Host[]>([]);
-  useEffect(() => {
-    setList(props.data);
-  }, [props.data]);
+  // const [list, setList] = useState<Host[]>([]);
+  // useEffect(() => {
+  //   setList(props.data);
+  // }, [props.data]);
   const [obg, setObg] = useState<Host>({
-    ipAddr: '',
-    macAddr: '',
-    name: '',
-    up: false
+    ipAddr: "",
+    macAddr: "",
+    name: "",
+    up: false,
   });
-  /**
-   * 唤醒
-   */
-  const huanxing = () => {
-    setOpen(false);
-
-    const time = setTimeout(async () => {
-      try {
-        const data = await client.getDevice(obg.macAddr);
-      } catch (err) {
-        console.log(err);
-      }
-    }, 5000);
-  };
 
   return (
     <MyList>
-      {list.map((row, index) => (
+      {props.data.map((row, index) => (
         <ListItem
           disabled
           button
@@ -89,7 +75,7 @@ const List: FC<{ data: Host[] }> = function (props) {
             <ListItemSecondaryAction>{obg.ipAddr}</ListItemSecondaryAction>
           </ListItem>
           <div className={classes.btn}>
-            <Button variant="contained" onClick={huanxing} color="primary">
+            <Button variant="contained" color="primary">
               唤醒
             </Button>
             <Button variant="contained" color="primary">

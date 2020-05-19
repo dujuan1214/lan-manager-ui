@@ -38,10 +38,6 @@ const Index: FC = () => {
     setData(data);
   }
 
-  const test = () => {
-    client.setHost({});
-  };
-
   useEffect(() => {
     load().catch(console.error);
   }, []);
