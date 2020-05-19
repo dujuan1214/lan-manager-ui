@@ -14,7 +14,7 @@ import {
 import ButtonNav from "../components/ButtonNav";
 import Home from "../page/home";
 import Ip from "../page/ip";
-import Mac from "../page/mac";
+import { Mac } from "../page/mac";
 
 const useStyles = makeStyles((theme) => ({
   root: {},

@@ -11,7 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
-import client, { Host, Page } from "../../../client";
+import client, { Host } from "../../../client";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
   },
 }));
-// function createData(name, status, open) {
-//   return { name, status, open };
-// }
 
 const List: FC<{ data: Host[] }> = function (props) {
   const classes = useStyles();
@@ -36,7 +33,12 @@ const List: FC<{ data: Host[] }> = function (props) {
   useEffect(() => {
     setList(props.data);
   }, [props.data]);
-  const [obg, setObg] = useState<any>({});
+  const [obg, setObg] = useState<Host>({
+    ipAddr: '',
+    macAddr: '',
+    name: '',
+    up: false
+  });
   /**
    * 唤醒
    */
@@ -68,7 +70,7 @@ const List: FC<{ data: Host[] }> = function (props) {
             <LaptopIcon />
           </ListItemIcon>
           <ListItemText style={{ width: "35px" }} primary={row.name} />
-          <ListItemText primary={row.state ? "已连接" : "未连接"} />
+          <ListItemText primary={row.up ? "已唤醒" : "未唤醒"} />
           <ListItemSecondaryAction>
             <CircularProgress size={16} />
           </ListItemSecondaryAction>
@@ -79,12 +81,12 @@ const List: FC<{ data: Host[] }> = function (props) {
         <MyList style={{ minWidth: "260px" }}>
           <ListItem>
             <ListItemText primary="mac地址:" />
-            <ListItemSecondaryAction>{obg.mac}</ListItemSecondaryAction>
+            <ListItemSecondaryAction>{obg.macAddr}</ListItemSecondaryAction>
           </ListItem>
           <Divider />
           <ListItem>
             <ListItemText primary="ip地址:" />
-            <ListItemSecondaryAction>{obg.ip}</ListItemSecondaryAction>
+            <ListItemSecondaryAction>{obg.ipAddr}</ListItemSecondaryAction>
           </ListItem>
           <div className={classes.btn}>
             <Button variant="contained" onClick={huanxing} color="primary">

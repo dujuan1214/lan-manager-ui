@@ -13,8 +13,7 @@ const Index: FC = () => {
   };
   return (
     <div style={{ textAlign: "center", marginTop: "5em" }}>
-      <h3>登录设置:</h3>
-      <h4>输入计算机的名称:</h4>
+      {/* <h4>输入计算机的名称:</h4>
       <TextField
         label="请输入IP地址"
         fullWidth
@@ -55,8 +54,8 @@ const Index: FC = () => {
         }}
         color="primary"
       >
-        唤醒
-      </Button>
+        添加
+      </Button> */}
     </div>
   );
 };

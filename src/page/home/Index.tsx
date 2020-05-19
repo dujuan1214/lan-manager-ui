@@ -35,7 +35,7 @@ const Index: FC = () => {
     await delay(1000);
     const data = await client.list();
     setLoading(false);
-    setData(data.result.rows);
+    setData(data);
   }
 
   const test = () => {
