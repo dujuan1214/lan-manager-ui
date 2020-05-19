@@ -5,24 +5,25 @@ import IpIcon from "mdi-material-ui/Ip";
 import RemoteDesktopIcon from "mdi-material-ui/RemoteDesktop";
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
-import NavLinkButton from '../NavLinkButton';
-import clsx from "clsx";
+import NavLinkButton from "../NavLinkButton";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-around",
+const useStyles = makeStyles(
+  (theme) => ({
+    root: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "space-around",
+    },
+    button: {
+      "&.active": {
+        backgroundColor: "rgba(38,103,152,0.3)",
+      },
+    },
+  }),
+  {
+    name: "ButtonNav",
   },
-  button: {
-    "&.active": {
-      backgroundColor: 'rgba(38,103,152,0.3)',
-
-    }
-  },
-}), {
-  name: "ButtonNav"
-});
+);
 
 const ButtonNav: FC = (props) => {
   const classes = useStyles();
