@@ -3,8 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import CastIcon from "mdi-material-ui/Cast";
 import IpIcon from "mdi-material-ui/Ip";
 import RemoteDesktopIcon from "mdi-material-ui/RemoteDesktop";
-import React, { FC } from "react";
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import React, { FC, useEffect } from "react";
+import {
+  HashRouter,
+  NavLink,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import ButtonNav from "../components/ButtonNav";
 import Home from "../page/home";
 import Ip from "../page/ip";
@@ -20,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const AppRouter: FC = () => {
   const classes = useStyles();
   return (
-    <HashRouter className={classes.root}>
+    <HashRouter>
       <Box>
         <Box style={{ height: "calc(100vh - 50px)", overflow: "auto" }}>
           <Routes>

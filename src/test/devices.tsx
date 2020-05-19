@@ -18,11 +18,11 @@ export async function fetchDevices(): Promise<Device[]> {
   await fetch("/api/host", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(obj)
-  })
-  
+    body: JSON.stringify(obj),
+  });
+
   console.log(json);
 
   return json.array as Device[];

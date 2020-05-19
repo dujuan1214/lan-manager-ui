@@ -1,32 +1,29 @@
+import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import delay from "delay";
 import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
-//import { Device, fetchDevices } from "../../test/devices";
-import client, { Host } from '../../client'
+import client, { Host, Page } from "../../client";
 import List from "./List/List";
 import Search from "./main/Search";
-import { makeStyles } from '@material-ui/core';
-import theme from '../../theme';
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     textAlign: "center",
-    position: 'relative'
+    position: "relative",
   },
   boxWrop: {
-    width: '100%',
-    height: '4em',
-    display: 'fixed'
+    width: "100%",
+    height: "4em",
+    display: "fixed",
   },
   boxText: {
-    position: 'absolute',
-    top: '1em',
-    right: "4%"
-  }
-}))
+    position: "absolute",
+    top: "1em",
+    right: "4%",
+  },
+}));
 const Index: FC = () => {
   // const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
@@ -36,15 +33,14 @@ const Index: FC = () => {
   async function load() {
     setLoading(true);
     await delay(1000);
-    let data = await client.fetchHosts();
-    console.log(data)
+    const data = await client.list();
     setLoading(false);
-    setData(data);
+    setData(data.result.rows);
   }
 
   const test = () => {
-    client.setHost({})
-  }
+    client.setHost({});
+  };
 
   useEffect(() => {
     load().catch(console.error);
@@ -52,9 +48,14 @@ const Index: FC = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.boxWrop} >
+      <div className={classes.boxWrop}>
         <Search />
-        <Button color="primary" size="medium" onClick={() => load()} className={classes.boxText}>
+        <Button
+          color="primary"
+          size="medium"
+          onClick={() => load()}
+          className={classes.boxText}
+        >
           <RefreshIcon />
         </Button>
       </div>

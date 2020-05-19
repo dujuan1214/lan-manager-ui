@@ -13,8 +13,10 @@ const app = express();
 
 if (process.env.SERVER_URL) {
   app.use(
+    "/api",
     createProxyMiddleware(["**", "!/*.*", "!/"], {
       target: process.env.SERVER_URL,
+      pathRewrite: { "^/api": "" },
       ws: true,
     }),
   );
