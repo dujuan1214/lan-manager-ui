@@ -44,7 +44,6 @@ const List: FC<{ data: Host[] }> = function (props) {
     <MyList>
       {props.data.map((row, index) => (
         <ListItem
-          disabled
           button
           key={row.name}
           onClick={() => {
@@ -57,9 +56,9 @@ const List: FC<{ data: Host[] }> = function (props) {
           </ListItemIcon>
           <ListItemText style={{ width: "35px" }} primary={row.name} />
           <ListItemText primary={row.up ? "已唤醒" : "未唤醒"} />
-          <ListItemSecondaryAction>
-            <CircularProgress size={16} />
-          </ListItemSecondaryAction>
+          <Button variant="contained" color="primary">
+            操作
+            </Button>
         </ListItem>
       ))}
       <Dialog maxWidth="xl" open={open} onClose={() => setOpen(false)}>
@@ -78,9 +77,7 @@ const List: FC<{ data: Host[] }> = function (props) {
             <Button variant="contained" color="primary">
               唤醒
             </Button>
-            <Button variant="contained" color="primary">
-              操作
-            </Button>
+
             <Button variant="contained" color="secondary">
               删除
             </Button>

@@ -28,7 +28,7 @@ export interface Addresses {
 class Client {
   readonly baseUrl = "/api";
   /**
-   * IP添加列表
+   * 显示列表
    */
   async list(): Promise<Host[]> {
     const resp = await fetch(this.baseUrl + "/host");

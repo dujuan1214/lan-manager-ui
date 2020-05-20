@@ -6,12 +6,12 @@ import AppRoute from "./Navigation/AppRouter";
 import theme from "./theme";
 
 const App: FC = function (props) {
-  const history = createHashHistory();
-  console.log(history);
+  // const history = createHashHistory();
+  // console.log(history);
 
-  history.listen(() => {
-    console.log(22222);
-  });
+  // history.listen(() => {
+  //   console.log(22222);
+  // });
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

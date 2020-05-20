@@ -1,8 +1,5 @@
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
-import CastIcon from "mdi-material-ui/Cast";
-import IpIcon from "mdi-material-ui/Ip";
-import RemoteDesktopIcon from "mdi-material-ui/RemoteDesktop";
 import React, { FC, useEffect } from "react";
 import {
   HashRouter,
