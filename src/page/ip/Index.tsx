@@ -21,8 +21,8 @@ const Index: FC = () => {
   const [data, setData] = useState<Host[]>([]);
   async function scanList() {
     const data = await client.scan([]);
-    // console.log('data', data)
-    setData(data.hosts);
+    console.log('data', data.hosts[0].addresses)
+    setData(data.hosts[0].addresses);
   }
   async function submit() {
     const res = await client.addList(param);
@@ -35,65 +35,69 @@ const Index: FC = () => {
 
   return (
     <List>
-      {data.map((row, index) => (
-        <ListItem button key={index} onClick={() => {
+      {data.map((row, i) => (
+        <ListItem button key={i} onClick={() => {
           setOpen(true);
         }}>
           <ListItemIcon>
             <LaptopIcon />
           </ListItemIcon>
-          <ListItemText style={{ width: "35px" }} primary="111" />
-          <ListItemText primary="444" />
-          <Dialog open={open} onClose={() => setOpen(false)}>
-            <DialogTitle style={{ textAlign: "center" }}>输入计算机的名称:</DialogTitle>
-
-
-            <TextField
-              label="请输入IP地址"
-              fullWidth
-              variant="outlined"
-              onChange={(e) => {
-                param.ipAddr = e.target.value;
-              }}
-              style={{ width: "90%" }}
-            />
-            <br />
-            <br />
-            <TextField
-              label="请输入MAC地址"
-              fullWidth
-              variant="outlined"
-              onChange={(e) => {
-                param.macAddr = e.target.value;
-              }}
-              style={{ width: "90%" }}
-            />
-            <br />
-            <br />
-            <TextField
-              label="请输入名称"
-              fullWidth
-              variant="outlined"
-              onChange={(e) => {
-                param.name = e.target.value;
-              }}
-              style={{ width: "90%" }}
-            />
-            <br />
-            <br />
-            <Button
-              variant="contained"
-              onClick={() => {
-                submit()
-              }}
-              color="primary"
-            >
-              添加
-              </Button>
-          </Dialog>
+          <ListItemText style={{ width: "35px" }} primary={data.addr} />
+          <ListItemText primary={data.addrtype} />
+          <Button variant="contained" color="primary">
+            操作
+          </Button>
         </ListItem>
       ))
       }
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>输入计算机的名称:</DialogTitle>
+        <div style={{ textAlign: "center" }}>
+          <TextField
+            label="请输入IP地址"
+            fullWidth
+            variant="outlined"
+            onChange={(e) => {
+              param.ipAddr = e.target.value;
+            }}
+            style={{ width: "90%" }}
+          />
+          <br />
+          <br />
+          <TextField
+            label="请输入MAC地址"
+            fullWidth
+            variant="outlined"
+            onChange={(e) => {
+              param.macAddr = e.target.value;
+            }}
+            style={{ width: "90%" }}
+          />
+          <br />
+          <br />
+          <TextField
+            label="请输入名称"
+            fullWidth
+            variant="outlined"
+            onChange={(e) => {
+              param.name = e.target.value;
+            }}
+            style={{ width: "90%" }}
+          />
+          <br />
+          <br />
+          <Button
+            variant="contained"
+            onClick={() => {
+              submit()
+            }}
+            color="primary"
+          >
+            添加
+        </Button>
+        </div>
+      </Dialog>
+
     </List >
 
   );

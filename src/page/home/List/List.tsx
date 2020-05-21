@@ -39,6 +39,10 @@ const List: FC<{ data: Host[] }> = function (props) {
     name: "",
     up: false,
   });
+  // async function wakeList() {
+  //   const datas = await client.wake();
+  // }
+  console.log(obg)
 
   return (
     <MyList>
@@ -46,17 +50,17 @@ const List: FC<{ data: Host[] }> = function (props) {
         <ListItem
           button
           key={row.name}
-          onClick={() => {
-            setOpen(true);
-            setObg(row);
-          }}
+
         >
           <ListItemIcon>
             <LaptopIcon />
           </ListItemIcon>
           <ListItemText style={{ width: "35px" }} primary={row.name} />
           <ListItemText primary={row.up ? "已唤醒" : "未唤醒"} />
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => {
+            setOpen(true);
+            setObg(row);
+          }}>
             操作
             </Button>
         </ListItem>
@@ -74,7 +78,9 @@ const List: FC<{ data: Host[] }> = function (props) {
             <ListItemSecondaryAction>{obg.ipAddr}</ListItemSecondaryAction>
           </ListItem>
           <div className={classes.btn}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={(e) => {
+              // macAddr = e.target.obg.macAddr
+            }}>
               唤醒
             </Button>
 
