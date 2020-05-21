@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const List: FC<{ data: Host[] }> = function (props) {
+const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   // const [list, setList] = useState<Host[]>([]);
@@ -39,30 +39,42 @@ const List: FC<{ data: Host[] }> = function (props) {
     name: "",
     up: false,
   });
-  // async function wakeList() {
-  //   const datas = await client.wake();
-  // }
-  console.log(obg)
+  async function wakeList(macAddr: string) {
+    const wakes = await client.wake(macAddr);
+    if (wakes) {
+      props.onRefresh();
+      setOpen(false);
+      alert("已成功唤醒");
+    }
+  }
+  async function deletes(macAddr: string) {
+    const res = await client.del(macAddr);
+    if (res) {
+      props.onRefresh();
+      setOpen(false);
+      alert("已成功删除");
+    }
+  }
 
   return (
     <MyList>
       {props.data.map((row, index) => (
-        <ListItem
-          button
-          key={row.name}
-
-        >
+        <ListItem button key={index}>
           <ListItemIcon>
             <LaptopIcon />
           </ListItemIcon>
           <ListItemText style={{ width: "35px" }} primary={row.name} />
           <ListItemText primary={row.up ? "已唤醒" : "未唤醒"} />
-          <Button variant="contained" color="primary" onClick={() => {
-            setOpen(true);
-            setObg(row);
-          }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setOpen(true);
+              setObg(row);
+            }}
+          >
             操作
-            </Button>
+          </Button>
         </ListItem>
       ))}
       <Dialog maxWidth="xl" open={open} onClose={() => setOpen(false)}>
@@ -78,13 +90,25 @@ const List: FC<{ data: Host[] }> = function (props) {
             <ListItemSecondaryAction>{obg.ipAddr}</ListItemSecondaryAction>
           </ListItem>
           <div className={classes.btn}>
-            <Button variant="contained" color="primary" onClick={(e) => {
-              // macAddr = e.target.obg.macAddr
-            }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                () => {
+                  wakeList(obg.macAddr);
+                };
+              }}
+            >
               唤醒
             </Button>
 
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                deletes(obg.macAddr);
+              }}
+            >
               删除
             </Button>
           </div>

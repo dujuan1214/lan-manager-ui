@@ -4,7 +4,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import delay from "delay";
 import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
-import client, { Host, Page } from "../../client";
+import client, { Host } from "../../client";
 import List from "./List/List";
 import Search from "./main/Search";
 
@@ -16,7 +16,8 @@ const useStyles = makeStyles(() => ({
   boxWrop: {
     width: "100%",
     height: "4em",
-    display: "fixed",
+    position: "fixed",
+    backgroundColor: "#303030",
   },
   boxText: {
     position: "absolute",
@@ -29,7 +30,6 @@ const Index: FC = () => {
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const [data, setData] = useState<Host[]>([]);
-
   async function load() {
     setLoading(true);
     await delay(1000);
@@ -55,12 +55,10 @@ const Index: FC = () => {
           <RefreshIcon />
         </Button>
       </div>
-      <List data={data} />
-      {loading && (
-        <span>
-          <CircularProgress />
-        </span>
-      )}
+      <div style={{ paddingTop: "4em" }}>
+        <List data={data} onRefresh={load} />
+        {loading && <CircularProgress />}
+      </div>
     </div>
   );
 };

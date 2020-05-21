@@ -3,26 +3,28 @@ export interface Host {
   macAddr: string;
   name: string;
   up: boolean;
+  type?: boolean;
 }
 
-export interface Page {
-  result: {
-    count: number;
-    rows: Host[];
-  };
-  status: string;
-}
-
-export interface Status {
-  reason: string;
-  reason_ttl: 3;
-  state: string;
-}
-
-export interface Addresses {
+export interface Addresse {
   addr: string;
   addrtype: string;
   vendor: string;
+}
+
+export interface Statu {
+  reason: string;
+  reason_ttl: number;
+  state: string;
+}
+
+export interface Hosts {
+  addresses: Addresse[];
+  status: Statu;
+}
+
+export interface RootObject {
+  hosts: Hosts[];
 }
 
 class Client {
@@ -58,7 +60,7 @@ class Client {
    * @param host
    * IP扫描列表
    */
-  async scan(ipArr: string[]): Promise<Host[]> {
+  async scan(ipArr: string[]): Promise<RootObject> {
     const res = await fetch(this.baseUrl + "/scan", {
       method: "post",
       headers: {
@@ -67,7 +69,7 @@ class Client {
       body: JSON.stringify(ipArr),
     });
     const json = await res.json();
-    return json as Host[];
+    return json as RootObject;
   }
 
   /**
