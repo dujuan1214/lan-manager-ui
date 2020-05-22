@@ -45,7 +45,7 @@ const Index: FC = () => {
   return (
     <div className={classes.root}>
       <div className={classes.boxWrop}>
-        <Search />
+        {/* <Search /> */}
         <Button
           color="primary"
           size="medium"
@@ -55,10 +55,8 @@ const Index: FC = () => {
           <RefreshIcon />
         </Button>
       </div>
-      <div style={{ paddingTop: "4em" }}>
-        <List data={data} onRefresh={load} />
-        {loading && <CircularProgress />}
-      </div>
+      <List data={data} onRefresh={load} />
+      {loading && <CircularProgress />}
     </div>
   );
 };
