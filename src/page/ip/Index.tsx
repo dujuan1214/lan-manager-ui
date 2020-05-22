@@ -10,8 +10,20 @@ import TextField from "@material-ui/core/TextField";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host, Hosts } from "../../client";
+import { makeStyles } from '@material-ui/core';
 
+const useStyles = makeStyles(() => ({
+  root: {
+    textAlign: "center",
+  },
+  // btn: {
+  //   position: "absolute",
+  //   top: '-20px',
+  //   right: "4%",
+  // }
+}));
 const Index: FC = () => {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [obg, setObg] = useState<Host>({
@@ -30,27 +42,16 @@ const Index: FC = () => {
   }
   async function submit() {
     const res = await client.addList(obg);
+    setOpen(false);
+    alert("添加成功");
   }
   useEffect(() => {
     scanList().catch(console.error);
   }, []);
 
   return (
-    <List style={{ textAlign: "center" }}>
-      <Button
-        onClick={() => {
-          setOpen(true);
-          setObg({
-            ipAddr: "",
-            macAddr: "",
-            name: "",
-            up: true,
-            type: false,
-          });
-        }}
-      >
-        新增
-      </Button>
+    <List className={classes.root}>
+
       {data.map((row, i) => (
         <ListItem button key={i}>
           <ListItemIcon>
@@ -62,7 +63,7 @@ const Index: FC = () => {
           />
           <ListItemText primary={row.addresses[0].addr} />
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             onClick={() => {
               setOpen(true);
@@ -79,6 +80,11 @@ const Index: FC = () => {
           </Button>
         </ListItem>
       ))}
+      {/* <div>
+        <Button  color="primary"  variant="contained"  onClick={() => {  setOpen(true);  setObg({    ipAddr: "",    macAddr: "",  name: "",  up: true,  type: false,    });  }}  >
+          新增
+      </Button>
+      </div> */}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>输入计算机的名称:</DialogTitle>
         <div style={{ textAlign: "center" }}>
@@ -134,7 +140,7 @@ const Index: FC = () => {
               if (obg.ipAddr && obg.macAddr) {
                 submit();
               } else {
-                alert("请输入ip或者mac");
+                alert("请输入IP地址及MAC地址");
               }
             }}
             color="primary"

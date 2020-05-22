@@ -11,13 +11,6 @@ import Search from "./main/Search";
 const useStyles = makeStyles(() => ({
   root: {
     textAlign: "center",
-    position: "relative",
-  },
-  boxWrop: {
-    width: "100%",
-    height: "4em",
-    position: "fixed",
-    backgroundColor: "#303030",
   },
   boxText: {
     position: "absolute",
@@ -26,13 +19,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const Index: FC = () => {
-  // const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const [data, setData] = useState<Host[]>([]);
   async function load() {
     setLoading(true);
-    await delay(1000);
+    await delay(500);
     const data = await client.list();
     setLoading(false);
     setData(data);
@@ -44,19 +36,16 @@ const Index: FC = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.boxWrop}>
-        {/* <Search /> */}
-        <Button
-          color="primary"
-          size="medium"
-          onClick={() => load()}
-          className={classes.boxText}
-        >
-          <RefreshIcon />
-        </Button>
-      </div>
-      <List data={data} onRefresh={load} />
+      <Button
+        color="primary"
+        size="medium"
+        onClick={() => load()}
+        className={classes.boxText}
+      >
+        <RefreshIcon />
+      </Button>
       {loading && <CircularProgress />}
+      <List data={data} onRefresh={load} />
     </div>
   );
 };

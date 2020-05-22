@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+// import Alert from '@material-ui/lab/Alert';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -44,6 +45,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     if (wakes) {
       props.onRefresh();
       setOpen(false);
+
       alert("已成功唤醒");
     }
   }
@@ -66,7 +68,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
           <ListItemText style={{ width: "35px" }} primary={row.name} />
           <ListItemText primary={row.up ? "已唤醒" : "未唤醒"} />
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             onClick={() => {
               setOpen(true);
@@ -91,8 +93,8 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
           </ListItem>
           <div className={classes.btn}>
             <Button
-              variant="contained"
-              color="primary"
+              variant="outlined"
+              color="secondary"
               onClick={(e) => {
                 () => {
                   wakeList(obg.macAddr);
@@ -103,7 +105,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
             </Button>
 
             <Button
-              variant="contained"
+              variant="outlined"
               color="secondary"
               onClick={() => {
                 deletes(obg.macAddr);
@@ -114,6 +116,10 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
           </div>
         </MyList>
       </Dialog>
+      {/* <Alert variant="outlined" severity="success">已成功唤醒</Alert>
+      <Alert variant="outlined" severity="error">
+        已成功删除
+      </Alert> */}
     </MyList>
   );
 };

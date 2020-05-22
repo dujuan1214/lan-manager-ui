@@ -4,6 +4,8 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import { makeStyles } from "@material-ui/core/styles";
 import MagnifyIcon from "mdi-material-ui/Magnify";
 import React, { FC } from "react";
+import Button from '@material-ui/core/Button';
+import RefreshIcon from "mdi-material-ui/Refresh";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,17 @@ const Nav: FC = function (props) {
           </InputAdornment>
         }
       />
+      {/* <Button
+        color="primary"
+        size="medium"
+        onClick={() => {
+          if(){
+
+          }
+        }}
+      >
+        <RefreshIcon />
+      </Button> */}
     </nav>
   );
 };
