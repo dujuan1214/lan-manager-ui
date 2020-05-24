@@ -4,13 +4,11 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import { makeStyles } from "@material-ui/core/styles";
 import MagnifyIcon from "mdi-material-ui/Magnify";
 import React, { FC } from "react";
-import Button from '@material-ui/core/Button';
-import RefreshIcon from "mdi-material-ui/Refresh";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: "left",
-    marginLeft: "1.5em"
+    marginLeft: "1.5em",
   },
   search: {
     width: "80%",
@@ -25,7 +23,6 @@ const Nav: FC = function (props) {
       <OutlinedInput
         color="secondary"
         fullWidth
-        onChange={() => { }}
         placeholder="搜索"
         className={classes.search}
         endAdornment={
@@ -36,17 +33,6 @@ const Nav: FC = function (props) {
           </InputAdornment>
         }
       />
-      {/* <Button
-        color="primary"
-        size="medium"
-        onClick={() => {
-          if(){
-
-          }
-        }}
-      >
-        <RefreshIcon />
-      </Button> */}
     </nav>
   );
 };
