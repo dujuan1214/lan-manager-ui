@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import ButtonNav from "../components/ButtonNav";
 import Home from "../page/home";
-import Search from "../page/home/main/Search";
+import Search from "../page/home/Search";
 import Ip from "../page/ip";
 import { Mac } from "../page/mac";
 

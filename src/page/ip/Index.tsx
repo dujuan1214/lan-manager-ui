@@ -11,8 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host, Hosts } from "../../client";
-import Toast from "../../components/Toast";
-import Search from "../home/main/Search";
+// import Toast from "../../components/Toast";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -43,6 +42,7 @@ const Index: FC = () => {
     const res = await client.addList(obg);
     setOpen(false);
     alert("添加成功");
+    // Toast.success("添加成功");
   }
   useEffect(() => {
     scanList().catch(console.error);

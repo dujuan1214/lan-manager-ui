@@ -5,8 +5,9 @@ import delay from "delay";
 import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host } from "../../client";
-import List from "./List/List";
-import Search from "./main/Search";
+import List from "./List";
+import Search from "./Search";
+import { browserHistory } from 'react-router';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     top: "1em",
     right: "4%",
-  },
+  }, 
 }));
 const Index: FC = () => {
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ const Index: FC = () => {
   useEffect(() => {
     load().catch(console.error);
   }, []);
+
 
   return (
     <div className={classes.root}>

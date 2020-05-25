@@ -9,15 +9,21 @@ interface Props {
   onClose: () => void;
 }
 
-interface ToastFn {
-  show: any;
-  error: () => void;
-  success: () => void;
-  clone: () => void;
+interface ToastProps {
+  severity: any;
+  text: string;
 }
 
+
+// interface ToastFn {
+//   show: () => void;
+//   error: () => void;
+//   success: () => void;
+//   clone: () => void;
+// }
+
 let messageInstance: Notification = null;
-export const Toast: FC<{ severity: any; text: string }> = function ({
+export const Toast: FC<ToastProps> = function ({
   severity,
   text,
 }) {
@@ -48,7 +54,7 @@ Toast.show = function (param: Props) {
   });
 };
 
-Toast.error = function (text = "", onClose = () => {}) {
+Toast.error = function (text = "", onClose = () => { }) {
   Notification.newInstance({}, (notification) => {
     if (messageInstance) {
       messageInstance.destroy();
@@ -65,7 +71,7 @@ Toast.error = function (text = "", onClose = () => {}) {
   });
 };
 
-Toast.success = function (text = "", onClose = () => {}) {
+Toast.success = function (text = "", onClose = () => { }) {
   Notification.newInstance({}, (notification) => {
     if (messageInstance) {
       messageInstance.destroy();
