@@ -45,7 +45,6 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     if (wakes) {
       props.onRefresh();
       setOpen(false);
-
       alert("已成功唤醒");
     }
   }
