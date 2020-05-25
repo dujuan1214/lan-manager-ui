@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host } from "../../../client";
-
+import Toast from "../../../components/Toast";
 const useStyles = makeStyles((theme) => ({
   root: {},
   box: {
@@ -30,10 +30,6 @@ const useStyles = makeStyles((theme) => ({
 const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  // const [list, setList] = useState<Host[]>([]);
-  // useEffect(() => {
-  //   setList(props.data);
-  // }, [props.data]);
   const [obg, setObg] = useState<Host>({
     ipAddr: "",
     macAddr: "",

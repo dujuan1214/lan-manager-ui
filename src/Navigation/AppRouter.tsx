@@ -10,9 +10,9 @@ import {
 } from "react-router-dom";
 import ButtonNav from "../components/ButtonNav";
 import Home from "../page/home";
+import Search from "../page/home/main/Search";
 import Ip from "../page/ip";
 import { Mac } from "../page/mac";
-import Search from "../page/home/main/Search";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   routers: {
     height: "calc(100vh - 7em)",
-    overflow: "auto"
+    overflow: "auto",
   },
 }));
 

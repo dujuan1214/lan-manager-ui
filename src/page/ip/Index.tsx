@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
@@ -10,17 +11,15 @@ import TextField from "@material-ui/core/TextField";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host, Hosts } from "../../client";
-import { makeStyles } from '@material-ui/core';
+import Toast from "../../components/Toast";
+import Search from "../home/main/Search";
 
 const useStyles = makeStyles(() => ({
   root: {
     textAlign: "center",
+    flex: 1,
+    overflow: "auto",
   },
-  // btn: {
-  //   position: "absolute",
-  //   top: '-20px',
-  //   right: "4%",
-  // }
 }));
 const Index: FC = () => {
   const classes = useStyles();
@@ -51,7 +50,6 @@ const Index: FC = () => {
 
   return (
     <List className={classes.root}>
-
       {data.map((row, i) => (
         <ListItem button key={i}>
           <ListItemIcon>
