@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Snackbar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,10 +8,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
+import Alert from '@material-ui/lab/Alert';
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host, Hosts } from "../../client";
-// import Toast from "../../components/Toast";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,6 +24,16 @@ const Index: FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [tsopen, setTsOpen] = React.useState(false);
+  const handleClick = () => {
+    setTsOpen(true);
+  };
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setTsOpen(false);
+  };
   const [obg, setObg] = useState<Host>({
     ipAddr: "",
     macAddr: "",
@@ -41,114 +51,121 @@ const Index: FC = () => {
   async function submit() {
     const res = await client.addList(obg);
     setOpen(false);
-    alert("添加成功");
-    // Toast.success("添加成功");
+    handleClick();
+    // alert("添加成功");
   }
   useEffect(() => {
     scanList().catch(console.error);
   }, []);
 
   return (
-    <List className={classes.root}>
-      {data.map((row, i) => (
-        <ListItem button key={i}>
-          <ListItemIcon>
-            <LaptopIcon />
-          </ListItemIcon>
-          <ListItemText
-            style={{ width: "35px" }}
-            primary={row.addresses[0].addrtype}
-          />
-          <ListItemText primary={row.addresses[0].addr} />
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setOpen(true);
-              setObg({
-                ipAddr: row.addresses[0].addr,
-                macAddr: row.addresses[1].addr,
-                name: "",
-                up: true,
-                type: true,
-              });
-            }}
-          >
-            操作
+    <div className={classes.root}>
+      <List>
+        {data.map((row, i) => (
+          <ListItem button key={i}>
+            <ListItemIcon>
+              <LaptopIcon />
+            </ListItemIcon>
+            <ListItemText
+              style={{ width: "35px" }}
+              primary={row.addresses[0].addrtype}
+            />
+            <ListItemText primary={row.addresses[0].addr} />
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                setOpen(true);
+                setObg({
+                  ipAddr: row.addresses[0].addr,
+                  macAddr: row.addresses[1].addr,
+                  name: "",
+                  up: true,
+                  type: true,
+                });
+              }}
+            >
+              操作
           </Button>
-        </ListItem>
-      ))}
-      {/* <div>
+          </ListItem>
+        ))}
+        {/* <div>
         <Button  color="primary"  variant="contained"  onClick={() => {  setOpen(true);  setObg({    ipAddr: "",    macAddr: "",  name: "",  up: true,  type: false,    });  }}  >
           新增
       </Button>
       </div> */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>输入计算机的名称:</DialogTitle>
-        <div style={{ textAlign: "center" }}>
-          <TextField
-            label="请输入IP地址"
-            fullWidth
-            disabled={obg.type}
-            variant="outlined"
-            defaultValue={obg.ipAddr}
-            onChange={(e) => {
-              setObg((state) => {
-                state.ipAddr = e.target.value;
-                return state;
-              });
-            }}
-            style={{ width: "90%" }}
-          />
-          <br />
-          <br />
-          <TextField
-            label="请输入MAC地址"
-            disabled={obg.type}
-            fullWidth
-            variant="outlined"
-            defaultValue={obg.macAddr}
-            onChange={(e) => {
-              setObg((state) => {
-                state.macAddr = e.target.value;
-                return state;
-              });
-            }}
-            style={{ width: "90%" }}
-          />
-          <br />
-          <br />
-          <TextField
-            label="请输入名称"
-            fullWidth
-            variant="outlined"
-            onChange={(e) => {
-              setObg((state) => {
-                state.name = e.target.value;
-                return state;
-              });
-            }}
-            style={{ width: "90%" }}
-          />
-          <br />
-          <br />
-          <Button
-            variant="contained"
-            onClick={() => {
-              if (obg.ipAddr && obg.macAddr) {
-                submit();
-              } else {
-                alert("请输入IP地址及MAC地址");
-              }
-            }}
-            color="primary"
-          >
-            添加
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle>输入计算机的名称:</DialogTitle>
+          <div style={{ textAlign: "center" }}>
+            <TextField
+              label="请输入IP地址"
+              fullWidth
+              disabled={obg.type}
+              variant="outlined"
+              defaultValue={obg.ipAddr}
+              onChange={(e) => {
+                setObg((state) => {
+                  state.ipAddr = e.target.value;
+                  return state;
+                });
+              }}
+              style={{ width: "90%" }}
+            />
+            <br />
+            <br />
+            <TextField
+              label="请输入MAC地址"
+              disabled={obg.type}
+              fullWidth
+              variant="outlined"
+              defaultValue={obg.macAddr}
+              onChange={(e) => {
+                setObg((state) => {
+                  state.macAddr = e.target.value;
+                  return state;
+                });
+              }}
+              style={{ width: "90%" }}
+            />
+            <br />
+            <br />
+            <TextField
+              label="请输入名称"
+              fullWidth
+              variant="outlined"
+              onChange={(e) => {
+                setObg((state) => {
+                  state.name = e.target.value;
+                  return state;
+                });
+              }}
+              style={{ width: "90%" }}
+            />
+            <br />
+            <br />
+            <Button
+              variant="contained"
+              onClick={() => {
+                if (obg.ipAddr && obg.macAddr) {
+                  submit();
+                } else {
+                  alert("请输入IP地址及MAC地址");
+                }
+              }}
+              color="primary"
+            >
+              添加
           </Button>
-        </div>
-      </Dialog>
-      {loading && <CircularProgress />}
-    </List>
+          </div>
+        </Dialog>
+        {loading && <CircularProgress />}
+      </List>
+      <Snackbar open={tsopen} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          添加成功!
+        </Alert>
+      </Snackbar>
+    </div>
   );
 };
 export default Index;

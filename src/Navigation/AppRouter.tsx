@@ -14,25 +14,32 @@ import Search from "../page/home/Search";
 import Ip from "../page/ip";
 import { Mac } from "../page/mac";
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  btn: {
-    height: "3em",
+const useStyles = makeStyles(
+  (theme) => ({
+    root: {
+      height: "100%",
+    },
+    btn: {
+      height: "3em",
+    },
+    search: {
+      height: "4em",
+    },
+    routers: {
+      height: "calc(100% - 7em)",
+      overflow: "auto",
+    },
+  }),
+  {
+    name: "AppRouter",
   },
-  search: {
-    height: "4em",
-  },
-  routers: {
-    height: "calc(100vh - 7em)",
-    overflow: "auto",
-  },
-}));
+);
 
 const AppRouter: FC = () => {
   const classes = useStyles();
   return (
     <HashRouter>
-      <Box>
+      <Box height={1}>
         <div className={classes.search}>
           <Search />
         </div>

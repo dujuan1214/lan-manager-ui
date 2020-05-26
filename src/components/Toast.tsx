@@ -14,19 +14,15 @@ interface ToastProps {
   text: string;
 }
 
-
-// interface ToastFn {
-//   show: () => void;
-//   error: () => void;
-//   success: () => void;
-//   clone: () => void;
-// }
+interface ToastFn {
+  show: () => void;
+  // error: () => void;
+  // success: () => void;
+  // clone: () => void;
+}
 
 let messageInstance: Notification = null;
-export const Toast: FC<ToastProps> = function ({
-  severity,
-  text,
-}) {
+export const Toast: FC<ToastProps> & ToastFn = function ({ severity, text }) {
   return (
     <Snackbar
       open={true}
@@ -37,58 +33,64 @@ export const Toast: FC<ToastProps> = function ({
   );
 };
 
-Toast.show = function (param: Props) {
-  Notification.newInstance({}, (notification) => {
-    if (messageInstance) {
-      messageInstance.destroy();
-      messageInstance = null;
-    }
+Toast.show = function () {};
 
-    messageInstance = notification;
-    notification.notice({
-      duration: param.duration || 2,
-      closable: true,
-      onClose: () => param.onClose?.(),
-      content: notification ? <Toast {...param} /> : null,
+export const ToastUtil = {
+  show(param: Props) {
+    Notification.newInstance({}, (notification) => {
+      if (messageInstance) {
+        messageInstance.destroy();
+        messageInstance = null;
+      }
+
+      messageInstance = notification;
+      notification.notice({
+        duration: param.duration || 2,
+        closable: true,
+        onClose: () => param.onClose?.(),
+        content: notification ? <Toast {...param} /> : null,
+      });
     });
-  });
-};
+  },
 
-Toast.error = function (text = "", onClose = () => { }) {
-  Notification.newInstance({}, (notification) => {
-    if (messageInstance) {
-      messageInstance.destroy();
-      messageInstance = null;
-    }
+  error(text = "", onClose = () => {}) {
+    Notification.newInstance({}, (notification) => {
+      if (messageInstance) {
+        messageInstance.destroy();
+        messageInstance = null;
+      }
 
-    messageInstance = notification;
-    notification.notice({
-      duration: 2,
-      closable: true,
-      onClose,
-      content: notification ? <Toast text={text} severity={"error"} /> : null,
+      messageInstance = notification;
+      notification.notice({
+        duration: 2,
+        closable: true,
+        onClose,
+        content: notification ? <Toast text={text} severity={"error"} /> : null,
+      });
     });
-  });
-};
+  },
 
-Toast.success = function (text = "", onClose = () => { }) {
-  Notification.newInstance({}, (notification) => {
-    if (messageInstance) {
-      messageInstance.destroy();
-      messageInstance = null;
-    }
+  success(text = "", onClose = () => {}) {
+    Notification.newInstance({}, (notification) => {
+      if (messageInstance) {
+        messageInstance.destroy();
+        messageInstance = null;
+      }
 
-    messageInstance = notification;
-    notification.notice({
-      duration: 2,
-      closable: true,
-      onClose,
-      content: notification ? <Toast text={text} severity={"success"} /> : null,
+      messageInstance = notification;
+      notification.notice({
+        duration: 2,
+        closable: true,
+        onClose,
+        content: notification ? (
+          <Toast text={text} severity={"success"} />
+        ) : null,
+      });
     });
-  });
+  },
+  clone() {
+    messageInstance.destroy();
+  },
 };
 
-Toast.clone = function () {
-  messageInstance.destroy();
-};
 export default Toast;

@@ -4,10 +4,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import delay from "delay";
 import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
+import { browserHistory } from 'react-router';
 import client, { Host } from "../../client";
 import List from "./List";
 import Search from "./Search";
-import { browserHistory } from 'react-router';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     top: "1em",
     right: "4%",
-  }, 
+  },
 }));
 const Index: FC = () => {
   const [loading, setLoading] = useState(false);

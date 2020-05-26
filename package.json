@@ -30,6 +30,7 @@
     "react-hot-loader": "^4.12.20",
     "react-router": "^6.0.0-alpha.3",
     "react-router-dom": "^6.0.0-alpha.3",
+    "react-storage-hooks": "^4.0.1",
     "rmc-notification": "^1.0.0"
   },
   "devDependencies": {

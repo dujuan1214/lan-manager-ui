@@ -82,6 +82,7 @@ class Client {
       method: "delete",
     });
     const json = await res.json();
+    console.log(json);
     return json as boolean;
   }
 
@@ -91,7 +92,7 @@ class Client {
    * 唤醒设备
    */
   async wake(macAddr: string): Promise<boolean> {
-    const res = await fetch(`${this.baseUrl}/host/${macAddr}/wake`);
+    const res = await fetch(this.baseUrl + `/host/${macAddr}/wake`);
     const json = await res.json();
     return json as boolean;
   }
