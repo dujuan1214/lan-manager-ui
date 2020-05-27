@@ -21,9 +21,11 @@ const useStyles = makeStyles(
     },
     btn: {
       height: "3em",
+      backgroundColor: '#353535'
     },
     search: {
       height: "4em",
+      backgroundColor: '#333333'
     },
     routers: {
       height: "calc(100% - 7em)",

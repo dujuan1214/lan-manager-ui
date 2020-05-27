@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: "left",
     marginLeft: "1.5em",
+    
   },
   search: {
     width: "80%",
@@ -33,6 +34,7 @@ const Nav: FC = function (props) {
           </InputAdornment>
         }
       />
+      
     </nav>
   );
 };

@@ -14,15 +14,8 @@ interface ToastProps {
   text: string;
 }
 
-interface ToastFn {
-  show: () => void;
-  // error: () => void;
-  // success: () => void;
-  // clone: () => void;
-}
-
 let messageInstance: Notification = null;
-export const Toast: FC<ToastProps> & ToastFn = function ({ severity, text }) {
+export const Toast: FC<ToastProps> = function ({ severity, text }) {
   return (
     <Snackbar
       open={true}
@@ -32,8 +25,6 @@ export const Toast: FC<ToastProps> & ToastFn = function ({ severity, text }) {
     </Snackbar>
   );
 };
-
-Toast.show = function () {};
 
 export const ToastUtil = {
   show(param: Props) {

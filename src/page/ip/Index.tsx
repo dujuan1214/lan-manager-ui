@@ -8,10 +8,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host, Hosts } from "../../client";
+import { ToastUtil } from "../../components/Toast";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,16 +25,6 @@ const Index: FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [tsopen, setTsOpen] = React.useState(false);
-  const handleClick = () => {
-    setTsOpen(true);
-  };
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setTsOpen(false);
-  };
   const [obg, setObg] = useState<Host>({
     ipAddr: "",
     macAddr: "",
@@ -48,11 +39,12 @@ const Index: FC = () => {
     setData(data.hosts);
     setLoading(false);
   }
+  
+
   async function submit() {
     const res = await client.addList(obg);
     setOpen(false);
-    handleClick();
-    // alert("添加成功");
+    ToastUtil.success("添加成功");
   }
   useEffect(() => {
     scanList().catch(console.error);
@@ -86,7 +78,7 @@ const Index: FC = () => {
               }}
             >
               操作
-          </Button>
+            </Button>
           </ListItem>
         ))}
         {/* <div>
@@ -155,16 +147,11 @@ const Index: FC = () => {
               color="primary"
             >
               添加
-          </Button>
+            </Button>
           </div>
         </Dialog>
         {loading && <CircularProgress />}
       </List>
-      <Snackbar open={tsopen} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          添加成功!
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

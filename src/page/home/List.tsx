@@ -14,6 +14,7 @@ import Alert from "@material-ui/lab/Alert";
 import LaptopIcon from "mdi-material-ui/Laptop";
 import React, { FC, useEffect, useState } from "react";
 import client, { Host } from "../../client";
+import { ToastUtil } from "../../components/Toast";
 const useStyles = makeStyles((theme) => ({
   root: {},
   box: {
@@ -30,16 +31,6 @@ const useStyles = makeStyles((theme) => ({
 const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [tsopen, setTsOpen] = React.useState(false);
-  const handleClick = () => {
-    setTsOpen(true);
-  };
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setTsOpen(false);
-  };
 
   const [obg, setObg] = useState<Host>({
     ipAddr: "",
@@ -47,12 +38,14 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     name: "",
     up: false,
   });
+  
+
   async function wakeList(macAddr: string) {
     const wakes = await client.wake(macAddr);
     if (wakes) {
       props.onRefresh();
       setOpen(false);
-      alert("已成功唤醒");
+      ToastUtil.success("已成功唤醒");
     }
   }
   async function deletes(macAddr: string) {
@@ -60,7 +53,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     if (res) {
       props.onRefresh();
       setOpen(false);
-      handleClick();
+      ToastUtil.success("已成功删除");
     }
   }
 
@@ -75,11 +68,11 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
             <ListItemText
               style={{ width: "35px" }}
               primary={row.name}
-              secondary="Jan 9, 2014"
+              secondary={row.up ? "已唤醒" : "未唤醒"}
             />
             <ListItemText
-              primary={row.up ? "已唤醒" : "未唤醒"}
-              secondary="Jan 9, 2014"
+              primary={row.ipAddr}
+              secondary={row.macAddr}
             />
             <Button
               variant="outlined"
@@ -129,11 +122,6 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
           </MyList>
         </Dialog>
       </MyList>
-      <Snackbar open={tsopen} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          已成功删除!
-        </Alert>
-      </Snackbar>
     </div>
   );
 };
