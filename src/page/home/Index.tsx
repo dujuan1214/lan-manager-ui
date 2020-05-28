@@ -4,7 +4,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import delay from "delay";
 import RefreshIcon from "mdi-material-ui/Refresh";
 import React, { FC, useEffect, useState } from "react";
-import { browserHistory } from 'react-router';
+import { browserHistory } from "react-router";
 import client, { Host } from "../../client";
 import List from "./List";
 import Search from "./Search";
@@ -34,7 +34,6 @@ const Index: FC = () => {
   useEffect(() => {
     load().catch(console.error);
   }, []);
-
 
   return (
     <div className={classes.root}>

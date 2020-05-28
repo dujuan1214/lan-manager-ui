@@ -57,6 +57,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     }
   }
 
+
   return (
     <div>
       <MyList>
@@ -70,10 +71,16 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
               primary={row.name}
               secondary={row.up ? "已唤醒" : "未唤醒"}
             />
-            <ListItemText
-              primary={row.ipAddr}
-              secondary={row.macAddr}
-            />
+            <ListItemText primary={row.ipAddr} secondary={row.macAddr} />
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => {
+                wakeList(row.macAddr);
+              }}
+            >
+              唤醒
+            </Button>
             <Button
               variant="outlined"
               color="primary"
@@ -82,7 +89,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
                 setObg(row);
               }}
             >
-              操作
+              删除
             </Button>
           </ListItem>
         ))}
@@ -99,16 +106,6 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
               <ListItemSecondaryAction>{obg.ipAddr}</ListItemSecondaryAction>
             </ListItem>
             <div className={classes.btn}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => {
-                  wakeList(obg.macAddr);
-                }}
-              >
-                唤醒
-              </Button>
-
               <Button
                 variant="outlined"
                 color="secondary"
