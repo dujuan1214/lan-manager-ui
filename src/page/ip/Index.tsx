@@ -37,9 +37,13 @@ const Index: FC = () => {
     setLoading(true);
     const data = await client.scan([]);
     setData(data.hosts);
+    let re = JSON.stringify(data.hosts);
+    localStorage.setItem("myCat", re);
+    let cat = localStorage.getItem("myCat");
+    let cats = JSON.parse(cat);
+    console.log(cats);
     setLoading(false);
   }
-  
 
   async function submit() {
     const res = await client.addList(obg);

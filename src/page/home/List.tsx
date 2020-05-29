@@ -38,7 +38,6 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     name: "",
     up: false,
   });
-  
 
   async function wakeList(macAddr: string) {
     const wakes = await client.wake(macAddr);
@@ -57,7 +56,6 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     }
   }
 
-
   return (
     <div>
       <MyList>
@@ -69,7 +67,7 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
             <ListItemText
               style={{ width: "35px" }}
               primary={row.name}
-              secondary={row.up ? "已唤醒" : "未唤醒"}
+              secondary={row.up ? "true" : "false"}
             />
             <ListItemText primary={row.ipAddr} secondary={row.macAddr} />
             <Button

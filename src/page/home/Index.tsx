@@ -29,11 +29,12 @@ const Index: FC = () => {
     const data = await client.list();
     setLoading(false);
     setData(data);
+    console.log(data);
   }
 
-  useEffect(() => {
-    load().catch(console.error);
-  }, []);
+  // useEffect(() => {
+  //   load().catch(console.error);
+  // }, []);
 
   return (
     <div className={classes.root}>
