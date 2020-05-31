@@ -11,43 +11,76 @@ import Search from "./Search";
 
 const useStyles = makeStyles(() => ({
   root: {
+    height: "100%",
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+  },
+  search: {
+    flex: "0 0 50px",
+  },
+  loadings: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
   },
   boxText: {
-    position: "absolute",
-    top: "1em",
-    right: "4%",
+    overflow: "auto",
+    flex: 1,
   },
 }));
+
 const Index: FC = () => {
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const [data, setData] = useState<Host[]>([]);
-  async function load() {
+  async function load(text: string = "") {
     setLoading(true);
-    await delay(500);
-    const data = await client.list();
+    const res = await client.list();
     setLoading(false);
-    setData(data);
-    console.log(data);
+    const sortData = res.sort(
+      (a: any, b: any) =>
+        a.ipAddr.replace(/\./g, "") - b.ipAddr.replace(/\./g, ""),
+    );
+    let findDatas: Host[] = [];
+    if (text) {
+      const findData = sortData.find((i) => i.ipAddr === text);
+      if (findData) {
+        findDatas = [findData];
+      } else {
+        findDatas = [];
+      }
+    } else {
+      findDatas = sortData;
+    }
+    setData(findDatas);
   }
-
-  // useEffect(() => {
-  //   load().catch(console.error);
-  // }, []);
+  useEffect(() => {
+    load().catch(console.error);
+  }, []);
 
   return (
     <div className={classes.root}>
-      <Button
+      <div className={classes.search}>
+        <Search onSearch={(text) => load(text)} onReload={() => load()} />
+      </div>
+
+      {/* <Button
         color="primary"
         size="medium"
         onClick={() => load()}
         className={classes.boxText}
       >
         <RefreshIcon />
-      </Button>
-      {loading && <CircularProgress />}
-      <List data={data} onRefresh={load} />
+      </Button> */}
+
+      <div className={classes.boxText}>
+        <List data={data} onRefresh={load} />
+        <div className={classes.loadings}>
+          {loading && <CircularProgress />}
+        </div>
+      </div>
     </div>
   );
 };

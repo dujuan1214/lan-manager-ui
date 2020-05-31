@@ -5,12 +5,17 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import { makeStyles } from "@material-ui/core/styles";
 import MagnifyIcon from "mdi-material-ui/Magnify";
 import RefreshIcon from "mdi-material-ui/Refresh";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
+interface NavProps {
+  onReload: () => void;
+  onSearch: (text: string) => void;
+}
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: "left",
     marginLeft: "1.5em",
+    backgroundColor: "#333333",
   },
   search: {
     width: "80%",
@@ -18,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0.8em",
   },
 }));
-const Nav: FC = function (props) {
+const Nav: FC<NavProps> = function (props) {
+  const [text, setText] = useState("");
   const classes = useStyles(props);
   return (
     <nav className={classes.root}>
@@ -27,17 +33,18 @@ const Nav: FC = function (props) {
         fullWidth
         placeholder="搜索"
         className={classes.search}
+        onChange={(e) => setText(e.target.value)}
         endAdornment={
-          <InputAdornment position="end">
+          <InputAdornment position="end" onClick={() => props.onSearch(text)}>
             <IconButton>
               <MagnifyIcon />
             </IconButton>
           </InputAdornment>
         }
       />
-      {/* <Button color="primary" size="medium">
+      <Button onClick={() => props.onReload()} color="primary" size="medium">
         <RefreshIcon />
-      </Button> */}
+      </Button>
     </nav>
   );
 };

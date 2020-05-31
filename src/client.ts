@@ -4,6 +4,8 @@ export interface Host {
   name: string;
   up: boolean;
   type?: boolean;
+  request?: boolean;
+  chec?: boolean;
 }
 
 export interface Addresse {
@@ -21,6 +23,7 @@ export interface Statu {
 export interface Hosts {
   addresses: Addresse[];
   status: Statu;
+  up?: boolean;
 }
 
 export interface RootObject {

@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -47,6 +48,30 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
       ToastUtil.success("已成功唤醒");
     }
   }
+  // async function wakeList(macAddr: string, index: number) {
+  //   const wakes = await client.wake(macAddr);
+  //   setData(state => {
+  //     return state.map((i, k) => {
+  //       if(k === index){
+  //         i.request = true;
+  //       }
+  //       return {...i};
+  //     });
+  //   });
+  //   if (wakes) {
+  //     props.onRefresh();
+  //     setOpen(false);
+  //     ToastUtil.success("已成功唤醒");
+  //     setData(state => {
+  //       return state.map(i => {
+  //         i.request = false;
+  //         return {...i};
+  //       });
+  //     });
+  //   } else {
+  //     await wakeList(macAddr, index);
+  //   }
+  // }
   async function deletes(macAddr: string) {
     const res = await client.del(macAddr);
     if (res) {
@@ -56,13 +81,36 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
     }
   }
 
+  function checChange(value: boolean, index: number) {
+    const newData = [...data];
+    newData[index].chec = value;
+    setData(newData);
+  }
+
+  const [data, setData] = useState<Host[]>([]);
+
+  useEffect(() => {
+    setData(
+      props.data.map((i) => {
+        i.request = false;
+        i.chec = false;
+        return i;
+      }),
+    );
+  }, [props.data]);
+
   return (
     <div>
       <MyList>
-        {props.data.map((row, index) => (
-          <ListItem button key={index}>
+        {data.map((row, index) => (
+          <ListItem button key={index} disabled={row.request}>
             <ListItemIcon>
-              <LaptopIcon />
+              <Checkbox
+                edge="start"
+                onChange={(e) => checChange(e.target.checked, index)}
+                checked={row.chec}
+                disableRipple
+              />
             </ListItemIcon>
             <ListItemText
               style={{ width: "35px" }}
@@ -70,11 +118,13 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
               secondary={row.up ? "true" : "false"}
             />
             <ListItemText primary={row.ipAddr} secondary={row.macAddr} />
+            {row.request && <CircularProgress size={20} />}
             <Button
               variant="outlined"
               color="secondary"
               onClick={() => {
                 wakeList(row.macAddr);
+                // wakeList(row.macAddr, index);
               }}
             >
               唤醒
@@ -117,6 +167,20 @@ const List: FC<{ data: Host[]; onRefresh: any }> = function (props) {
           </MyList>
         </Dialog>
       </MyList>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].chec) {
+              deletes(data[i].macAddr);
+            }
+          }
+        }}
+      >
+        删除
+      </Button>
     </div>
   );
 };
