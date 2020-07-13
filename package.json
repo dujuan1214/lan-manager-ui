@@ -52,7 +52,7 @@
     "posthtml-include": "^1.4.3",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "standard-version": "^7.1.0",
+    "standard-version": "^8.0.1",
     "ts-node": "^8.9.1",
     "tslint": "^6.1.2",
     "tslint-react-hooks": "^2.2.2",
